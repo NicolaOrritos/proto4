@@ -1,0 +1,11 @@
+{
+    "name": "proto4"
+  , "version": "0.1.0"
+  , "private": false
+  , "dependencies": {
+      "textract": ""
+    , "redis": ""
+    , "hiredis": ""
+    , "stopwords": ""
+  }
+}

@@ -1,0 +1,4 @@
+
+ DOC, PAGE -> TERM, TIMES
+ With Redis, this is as follows:  zadd DOC:PAGE TIMES TERM
+
