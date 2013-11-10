@@ -28,9 +28,7 @@ var delayedExtraction = function()
         }
         else
         {
-            // console.log("pages: %s", pages);
-            console.log("isArray: %s", Array.isArray(pages));
-            console.log("pages.length: %s", pages.length);
+            console.log("pages: %d", pages.length);
             
             
             for (var i=0; i<pages.length; i++)
@@ -104,10 +102,10 @@ var delayedExtraction = function()
                     }
                     
             
-                    console.log("PAGE %d", (i + 1));
+                    /* console.log("PAGE %d", (i + 1));
                     console.log("simple terms found: #%d", terms.length);
                     console.log("useful terms found: #%d", usefulTerms.length);
-                    console.log("final  terms found: #%d", finalTerms.length);
+                    console.log("final  terms found: #%d", finalTerms.length); */
                 }
             }
         }
