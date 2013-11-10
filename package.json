@@ -2,8 +2,20 @@
     "name": "proto4"
   , "version": "0.1.0"
   , "private": false
+  , "author": "Nicola Orritos"
+  , "readmeFilename": "README.md"
+  
+  , "repository": {
+      "type": "git"
+    , "url": "git://github.com/NicolaOrritos/proto4.git"
+  }
+  
+  , "main": "proto.js"
+  
+  , "COMMENT": "// Latest version of pdf-text-extract is bugged, hence we're using 1.0.7"
+  
   , "dependencies": {
-      "textract": ""
+      "pdf-text-extract": "1.0.7"
     , "redis": ""
     , "hiredis": ""
     , "stopwords": ""

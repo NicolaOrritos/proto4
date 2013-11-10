@@ -1,91 +1,115 @@
 
-var textract = require('textract');
+var path = require('path');
+var extract = require('pdf-text-extract');
 var stopwords = require('stopwords').english;
 
 
-var filePath = "examples/Cosmos.pdf";
+var examplePath = "examples/Cosmos.pdf";
 
 
 var delayedExtraction = function()
 {
-    textract(filePath, function( error, text )
+    var filePath = path.join(__dirname, examplePath)
+
+    extract(filePath, function( error, pages )
     {
         var start = new Date();
         
         if (error)
         {
-            console.log("%s", error);
+            console.log("Error: '%s'", error.message);
+            console.log("%s", error.filePath);
+            console.log("%s", error.command);
+            console.log("%s", error.stack);
         }
-        else if (!text)
+        else if (!pages)
         {
-            console.log("Error: no text received");
+            console.log("Error: no pages received");
         }
         else
         {
-            // Ignore punctuation for now...
-            var terms = text.split(" ");
+            // console.log("pages: %s", pages);
+            console.log("isArray: %s", Array.isArray(pages));
+            console.log("pages.length: %s", pages.length);
             
-            var usefulTerms = new Array();
             
-            
-            for (var a=0; a<terms.length; a++)
+            for (var i=0; i<pages.length; i++)
             {
-                var term = terms[a];
+                var text = pages[i];
                 
-                if (term)
+                if (text)
                 {
-                    // console.log("Term before chores:    '%s'", term);
+                    // console.log("text: %s", text);
                     
                     
-                    term = term.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/, "");
+                    // Ignore punctuation for now...
+                    var terms = text.split(" ");
                     
-                    // console.log("Term after chores #1:  '%s'", term);
-                    
-                    term = term.replace(/^\d+$/, "");
-                    
-                    // console.log("Term after chores #2:  '%s'", term);
-                    
-                    term = term.trim();
-                    
-                    // console.log("Term after chores #3:  '%s'", term);
-                    
-                    term = term.toLowerCase();
-                    
-                    // console.log("Term after chores #4:  '%s'", term);
-                    
-                    term = /[a-zA-Z]/.test(term) ? term : "";
-                    
-                    // console.log("Term after chores #5:  '%s'", term);
+                    var usefulTerms = new Array();
                     
                     
-                    if (term.length > 0)
+                    for (var a=0; a<terms.length; a++)
                     {
-                        usefulTerms.push(term);
-                    }
-                }
-            }
-            
-            
-            var finalTerms = new Array();
-            
-            for (var a=0; a<usefulTerms.length; a++)
-            {
-                var term = usefulTerms[a];
-                
-                if (term)
-                {
-                    if (stopwords.indexOf(term) == -1)
-                    {
-                        finalTerms.push(term);
+                        var term = terms[a];
                         
-                        console.log("Found a final-term: '%s'", term);
+                        if (term)
+                        {
+                            // console.log("Term before chores:    '%s'", term);
+                            
+                            
+                            term = term.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/, "");
+                            
+                            // console.log("Term after chores #1:  '%s'", term);
+                            
+                            term = term.replace(/^\d+$/, "");
+                            
+                            // console.log("Term after chores #2:  '%s'", term);
+                            
+                            term = term.trim();
+                            
+                            // console.log("Term after chores #3:  '%s'", term);
+                            
+                            term = term.toLowerCase();
+                            
+                            // console.log("Term after chores #4:  '%s'", term);
+                            
+                            term = /[a-zA-Z]/.test(term) ? term : "";
+                            
+                            // console.log("Term after chores #5:  '%s'", term);
+                            
+                            
+                            if (term.length > 0)
+                            {
+                                usefulTerms.push(term);
+                            }
+                        }
                     }
+                    
+                    
+                    var finalTerms = new Array();
+                    
+                    for (var a=0; a<usefulTerms.length; a++)
+                    {
+                        var term = usefulTerms[a];
+                        
+                        if (term)
+                        {
+                            if (stopwords.indexOf(term) == -1)
+                            {
+                                finalTerms.push(term);
+                                
+                                // console.log("Found a final-term: '%s'", term);
+                            }
+                        }
+                    }
+                    
+            
+                    console.log("PAGE %d", (i + 1));
+                    console.log("simple terms found: #%d", terms.length);
+                    console.log("useful terms found: #%d", usefulTerms.length);
+                    console.log("final  terms found: #%d", finalTerms.length);
                 }
             }
-            
-            console.log("simple terms found: #%d", terms.length);
-            console.log("useful terms found: #%d", usefulTerms.length);
-            console.log("final  terms found: #%d", finalTerms.length);
         }
         
         var end = new Date();
@@ -93,11 +117,11 @@ var delayedExtraction = function()
         var time = end - start;
         
         console.log("\nmilliseconds: #%d", time);
-        console.log("seconds: #%.2f", time / 1000);
+        console.log("seconds:      #%d", (time / 1000));
     });
 };
 
 
-setTimeout(delayedExtraction, 5000);
+setTimeout(delayedExtraction, 500);
 
 
