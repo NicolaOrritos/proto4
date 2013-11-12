@@ -2,9 +2,19 @@
 var path = require('path');
 var extract = require('pdf-text-extract');
 var stopwords = require('stopwords').english;
+var redis = require("redis").createClient();
+
+redis.on("error", function (err)
+{
+    console.log("Got an error from the Redis client: " + err);
+});
+
+var REDIS_DB = 12;
 
 
 var examplePath = "examples/Cosmos.pdf";
+
+var docID = "Cosmos.pdf";
 
 
 var delayedExtraction = function()
@@ -83,19 +93,29 @@ var delayedExtraction = function()
                     }
                     
                     
-                    var finalTerms = new Array();
+                    // Let's use an associative array here:
+                    var termsWithScore = new Object();
                     
                     for (var a=0; a<usefulTerms.length; a++)
                     {
                         var term = usefulTerms[a];
                         
+                        
+                        
                         if (term)
                         {
                             if (stopwords.indexOf(term) == -1)
                             {
-                                finalTerms.push(term);
+                                var score = termsWithScore[term];
+                            
+                                if (!score)
+                                {
+                                    score = 0;
+                                }
                                 
-                                console.log("Found a final-term: '%s'", term);
+                                termsWithScore[term] = ++score;
+                                
+                                // console.log("Found a final-term: '%s'", term);
                             }
                         }
                     }
@@ -104,10 +124,11 @@ var delayedExtraction = function()
                     /* console.log("PAGE %d", (i + 1));
                     console.log("simple terms found: #%d", terms.length);
                     console.log("useful terms found: #%d", usefulTerms.length);
-                    console.log("final  terms found: #%d", finalTerms.length); */
+                    console.log("final  terms found: #%d", termsWithScore.length); */
                     
+                    var pageID = "" + i;
                     
-                    pushTerms(finalTerms);
+                    pushTerms(docID, pageID, termsWithScore);
                 }
             }
         }
@@ -120,6 +141,47 @@ var delayedExtraction = function()
         console.log("seconds:      #%d", (time / 1000));
     });
 };
+
+
+function pushTerms(docID, pageID, terms)
+{
+    if (docID)
+    if (pageID)
+    if (terms)
+    {
+        redis.select(REDIS_DB, function()
+        {
+            var key = docID + ":" + pageID;
+            
+            console.log("key is: %s", key);
+            
+            /* For test purposes and for a number of good reasons
+             * we should delete the key before adding the newly found items */
+            redis.del(key, function()
+            {
+                for(term in terms)
+                {
+                    var score = terms[term];
+                    
+                    var args = [key, score, term];
+                    
+                    // Push the term with its score in the DB:
+                    redis.zadd(args, function(error, result)
+                    {
+                        if (error)
+                        {
+                            console.log("Error when adding the new term: %s", error);
+                        }
+                        else
+                        {
+                            console.log("Added/updated #%d term(s)", result);
+                        }
+                    });
+                }
+            });
+        });
+    }
+}
 
 
 setTimeout(delayedExtraction, 500);
