@@ -37,10 +37,9 @@ var delayedExtraction = function()
                 
                 if (text)
                 {
-                    // console.log("text: %s", text);
+                    // Remove line-breaks before all:
+                    text = text.replace(/\r?\n|\r/g, " ");
                     
-                    
-                    // Ignore punctuation for now...
                     var terms = text.split(" ");
                     
                     var usefulTerms = new Array();
@@ -96,7 +95,7 @@ var delayedExtraction = function()
                             {
                                 finalTerms.push(term);
                                 
-                                // console.log("Found a final-term: '%s'", term);
+                                console.log("Found a final-term: '%s'", term);
                             }
                         }
                     }
@@ -106,6 +105,9 @@ var delayedExtraction = function()
                     console.log("simple terms found: #%d", terms.length);
                     console.log("useful terms found: #%d", usefulTerms.length);
                     console.log("final  terms found: #%d", finalTerms.length); */
+                    
+                    
+                    pushTerms(finalTerms);
                 }
             }
         }
