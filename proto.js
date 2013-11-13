@@ -38,7 +38,7 @@ var delayedExtraction = function()
         }
         else
         {
-            console.log("pages: %d", pages.length);
+            console.log("Document '%s' has %d pages", docID, pages.length);
             
             
             for (var i=0; i<pages.length; i++)
@@ -62,7 +62,6 @@ var delayedExtraction = function()
                         if (term)
                         {
                             // console.log("Term before chores:    '%s'", term);
-                            
                             
                             term = term.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/, "");
                             
@@ -153,9 +152,9 @@ function pushTerms(docID, pageID, terms)
         {
             var key = docID + ":" + pageID;
             
-            console.log("key is: %s", key);
+            // console.log("key is: %s", key);
             
-            /* For test purposes and for a number of good reasons
+            /* For test purposes and for a number of other good reasons
              * we should delete the key before adding the newly found items */
             redis.del(key, function()
             {
@@ -174,7 +173,22 @@ function pushTerms(docID, pageID, terms)
                         }
                         else
                         {
-                            console.log("Added/updated #%d term(s)", result);
+                            // console.log("[ZADD] Added/updated #%d term(s)", result);
+                            
+                            if (result > 0)
+                            {
+                                redis.sadd(term, key, function(err, res)
+                                {
+                                    if (err)
+                                    {
+                                        console.log("Error when adding the new term: %s", err);
+                                    }
+                                    else
+                                    {
+                                        // console.log("[SADD] Added/updated #%d term(s)", res);
+                                    }
+                                });
+                            }
                         }
                     });
                 }
