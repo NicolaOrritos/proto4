@@ -17,7 +17,7 @@ var examplePath = "examples/Cosmos.pdf";
 var docID = "Cosmos.pdf";
 
 
-function pushTerms(docID, pageID, terms)
+function pushTerms(docID, pageID, terms, callback)
 {
     if (docID)
     if (pageID)
@@ -67,13 +67,19 @@ function pushTerms(docID, pageID, terms)
                         }
                     });
                 }
+                
+                // Callback gets called before actually finishing the operations
+                if (callback)
+                {
+                    callback.call();
+                }
             });
         });
     }
 }
 
 
-function extraction()
+function extraction(callback)
 {
     var filePath = path.join(__dirname, examplePath)
 
@@ -183,7 +189,10 @@ function extraction()
                     
                     var pageID = "" + i;
                     
-                    pushTerms(docID, pageID, termsWithScore);
+                    pushTerms(docID, pageID, termsWithScore, function()
+                    {
+                        // console.log("Added the terms for this page");
+                    });
                 }
             }
         }
@@ -194,9 +203,18 @@ function extraction()
         
         console.log("\nmilliseconds: #%d", time);
         console.log("seconds:      #%d", (time / 1000));
+        
+        // Callback gets called before actually finishing the operations
+        if (callback)
+        {
+            callback.call();
+        }
     });
 }
 
-extraction();
+extraction(function()
+{
+    console.log("Added document to the DB");
+});
 
 
