@@ -17,7 +17,63 @@ var examplePath = "examples/Cosmos.pdf";
 var docID = "Cosmos.pdf";
 
 
-var delayedExtraction = function()
+function pushTerms(docID, pageID, terms)
+{
+    if (docID)
+    if (pageID)
+    if (terms)
+    {
+        redis.select(REDIS_DB, function()
+        {
+            var key = docID + ":" + pageID;
+            
+            // console.log("key is: %s", key);
+            
+            /* For test purposes and for a number of other good reasons
+             * we should delete the key before adding the newly found items */
+            redis.del(key, function()
+            {
+                for(term in terms)
+                {
+                    var score = terms[term];
+                    
+                    var args = [key, score, term];
+                    
+                    // Push the term with its score in the DB:
+                    redis.zadd(args, function(error, result)
+                    {
+                        if (error)
+                        {
+                            console.log("Error when adding the new term: %s", error);
+                        }
+                        else
+                        {
+                            // console.log("[ZADD] Added/updated #%d term(s)", result);
+                            
+                            if (result > 0)
+                            {
+                                redis.sadd(term, key, function(err, res)
+                                {
+                                    if (err)
+                                    {
+                                        console.log("Error when adding the new term: %s", err);
+                                    }
+                                    else
+                                    {
+                                        // console.log("[SADD] Added/updated #%d term(s)", res);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    }
+}
+
+
+function extraction()
 {
     var filePath = path.join(__dirname, examplePath)
 
@@ -139,65 +195,8 @@ var delayedExtraction = function()
         console.log("\nmilliseconds: #%d", time);
         console.log("seconds:      #%d", (time / 1000));
     });
-};
-
-
-function pushTerms(docID, pageID, terms)
-{
-    if (docID)
-    if (pageID)
-    if (terms)
-    {
-        redis.select(REDIS_DB, function()
-        {
-            var key = docID + ":" + pageID;
-            
-            // console.log("key is: %s", key);
-            
-            /* For test purposes and for a number of other good reasons
-             * we should delete the key before adding the newly found items */
-            redis.del(key, function()
-            {
-                for(term in terms)
-                {
-                    var score = terms[term];
-                    
-                    var args = [key, score, term];
-                    
-                    // Push the term with its score in the DB:
-                    redis.zadd(args, function(error, result)
-                    {
-                        if (error)
-                        {
-                            console.log("Error when adding the new term: %s", error);
-                        }
-                        else
-                        {
-                            // console.log("[ZADD] Added/updated #%d term(s)", result);
-                            
-                            if (result > 0)
-                            {
-                                redis.sadd(term, key, function(err, res)
-                                {
-                                    if (err)
-                                    {
-                                        console.log("Error when adding the new term: %s", err);
-                                    }
-                                    else
-                                    {
-                                        // console.log("[SADD] Added/updated #%d term(s)", res);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    }
 }
 
-
-setTimeout(delayedExtraction, 500);
+extraction();
 
 
