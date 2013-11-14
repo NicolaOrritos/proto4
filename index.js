@@ -1,3 +1,3 @@
 
-module.exports = require("./lib/xtractor.js");
+module.exports = require("./lib/xtr.js");
 
