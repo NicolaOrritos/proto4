@@ -19,5 +19,6 @@
     , "redis": ""
     , "hiredis": ""
     , "stopwords": ""
+    , "wait.for": ""
   }
 }

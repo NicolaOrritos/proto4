@@ -1,7 +1,28 @@
 
-var xtr = require("./index.js");
+var xtr  = require("./index.js");
+var wait = require("wait.for");
 
-xtr.actor.init(function(error, result)
+function main()
+{
+    var result = wait.for(xtr.actor.init);
+    
+    // Result is the set of docs of this xtr.actor instance
+    console.log("docs: %s", result);
+    
+    var examplePath = "examples/Cosmos.pdf";
+    var docID = "Cosmos.pdf";
+    
+    var loadingResult = wait.for(xtr.actor.load, examplePath, docID);
+    
+    console.log("Pages processed: %s", loadingResult.length);
+    console.log("Results: %s", loadingResult);
+    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
+}
+
+wait.launchFiber(main);
+
+
+/* xtr.actor.init(function(error, result)
 {
     // Result is the set of docs of this xtr.actor instance
     console.log("docs: %s", result);
@@ -17,7 +38,7 @@ xtr.actor.init(function(error, result)
     });
     
     
-    /* var start = new Date();
+    var start = new Date();
 
     xtr.actor.search("result", function(result)
     {
@@ -38,7 +59,7 @@ xtr.actor.init(function(error, result)
                 console.log("Res: %s", result[a]);
             }
         }
-    }); */
+    });
     
-});
+}); */
 
