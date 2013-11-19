@@ -4,7 +4,7 @@ var wait = require("wait.for");
 
 function main()
 {
-    var result = wait.for(xtr.actor.init);
+    var result = wait.forMethod(xtr.actor, "init");
     
     // Result is the set of docs of this xtr.actor instance
     console.log("docs: %s", result);
@@ -12,7 +12,7 @@ function main()
     var examplePath = "examples/Cosmos.pdf";
     var docID = "Cosmos.pdf";
     
-    var loadingResult = wait.for(xtr.actor.load, examplePath, docID);
+    var loadingResult = wait.forMethod(xtr.actor, "load", examplePath, docID);
     
     console.log("Pages processed: %s", loadingResult.length);
     console.log("Results: %s", loadingResult);
