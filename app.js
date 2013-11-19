@@ -17,6 +17,8 @@ function main()
     console.log("Pages processed: %s", loadingResult.length);
     console.log("Results: %s", loadingResult);
     console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
+    
+    return;
 }
 
 wait.launchFiber(main);
