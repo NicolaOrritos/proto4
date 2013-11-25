@@ -10,8 +10,11 @@ function main()
     console.log("docs: %s", result);
 
 
-    /* var examplePath = "examples/Cosmos.pdf";
-    var docID = "Cosmos.pdf";
+    ////////////////////////////////////////////////
+    
+
+    var examplePath = "examples/MMAN0001_2012_TAB.pdf";
+    var docID = "MMAN0001_2012_TAB.pdf";
     // var examplePath = "examples/HiddenReality.pdf";
     // var docID = "HiddenReality.pdf";
 
@@ -19,7 +22,7 @@ function main()
 
     console.log("Pages processed: %s", loadingResult.length);
     console.log("Results: %s", loadingResult);
-    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO"); */
+    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
 
 
     ////////////////////////////////////////////////
@@ -54,10 +57,21 @@ function main()
 
 
     result = undefined;
+    var page = 0;
+    var term = "bacteria";
+    
+    var start = new Date();
 
-    result = wait.forMethod(xtr.actor, "allCorrelatedTo", "result");
+    result = wait.forMethod(xtr.actor, "correlatedWithinPage", "MMAN0001_2012_TAB.pdf", page, term);
+    
+    var end = new Date();
 
-    console.log("result: %s", result);
+    var time = end - start;
+
+    console.log("\nmilliseconds: #%d", time);
+    console.log("seconds:      #%d", (time / 1000));
+
+    console.log("Correlated to '%s' on page %d: %s", term, page, JSON.stringify(result));
 }
 
 wait.launchFiber(main);
