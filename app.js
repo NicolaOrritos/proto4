@@ -2,6 +2,7 @@
 var xtr  = require("./index.js");
 var wait = require("wait.for");
 
+
 function main()
 {
     var result = wait.forMethod(xtr.actor, "init");
@@ -13,7 +14,7 @@ function main()
     ////////////////////////////////////////////////
     
 
-    var examplePath = "examples/MMAN0001_2012_TAB.pdf";
+    /* var examplePath = "examples/MMAN0001_2012_TAB.pdf";
     var docID = "MMAN0001_2012_TAB.pdf";
     // var examplePath = "examples/HiddenReality.pdf";
     // var docID = "HiddenReality.pdf";
@@ -22,17 +23,18 @@ function main()
 
     console.log("Pages processed: %s", loadingResult.length);
     console.log("Results: %s", loadingResult);
-    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
+    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO"); */
 
 
     ////////////////////////////////////////////////
 
 
     /* result = undefined;
+    var term = "result";
 
     var start = new Date();
 
-    result = wait.forMethod(xtr.actor, "search", "physics");
+    result = wait.forMethod(xtr.actor, "search", term);
 
     console.log("Document was searched");
 
@@ -77,7 +79,7 @@ function main()
     ////////////////////////////////////////////////
 
 
-    /* result = undefined;
+    result = undefined;
     var term = "gravity";
     var docID = "HiddenReality.pdf";
     
@@ -92,7 +94,7 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on document '%s': %s", term, docID, JSON.stringify(result)); */
+    console.log("Correlated to '%s' on document '%s': %s", term, docID, JSON.stringify(result));
 }
 
 wait.launchFiber(main);
