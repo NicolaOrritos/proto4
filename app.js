@@ -80,7 +80,7 @@ function main()
 
 
     result = undefined;
-    var term = "gravity";
+    var term = "result";
     var docID = "HiddenReality.pdf";
     
     var start = new Date();
@@ -94,7 +94,7 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on document '%s': %s", term, docID, JSON.stringify(result));
+    console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length);
 }
 
 wait.launchFiber(main);
