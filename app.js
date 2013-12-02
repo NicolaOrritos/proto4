@@ -78,7 +78,6 @@ function main()
 
     ////////////////////////////////////////////////
 
-
     result = undefined;
     var term = "result";
     var docID = "HiddenReality.pdf";
