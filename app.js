@@ -14,20 +14,20 @@ function main()
     ////////////////////////////////////////////////
     
 
-    var examplePath = "examples/MMAN0001_2012_TAB.pdf";
+    /* var examplePath = "examples/MMAN0001_2012_TAB.pdf";
     var docID = "MMAN0001_2012_TAB.pdf";
     // var examplePath = "examples/HiddenReality.pdf";
     // var docID = "HiddenReality.pdf";
 
     var loadingResult = wait.forMethod(pdfix.loader, "load", examplePath, docID);
 
-    console.log("Pages processed: %s", loadingResult);
+    console.log("Pages processed: %s", loadingResult); */
 
 
     ////////////////////////////////////////////////
 
 
-    result = undefined;
+    /* result = undefined;
     var term = "result";
 
     var start = new Date();
@@ -50,19 +50,19 @@ function main()
         {
             console.log("Res: %s", JSON.stringify(result[a]));
         }
-    }
+    } */
 
 
     ////////////////////////////////////////////////
 
 
-    /* result = undefined;
-    var page = 1;
-    var term = "hidden";
+    result = undefined;
+    var page = 0;
+    var term = "survey";
     
     var start = new Date();
 
-    result = wait.forMethod(xtr.actor, "correlatedWithinPage", "HiddenReality.pdf", page, term);
+    result = wait.forMethod(pdfix.search, "correlatedWithinPage", "MMAN0001_2012_TAB.pdf", page, term);
     
     var end = new Date();
 
@@ -71,7 +71,7 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on page %d: %s", term, page, JSON.stringify(result)); */
+    console.log("Correlated to '%s' on page %d: %s", term, page, JSON.stringify(result));
 
 
     ////////////////////////////////////////////////
