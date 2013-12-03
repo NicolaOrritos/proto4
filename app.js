@@ -56,7 +56,7 @@ function main()
     ////////////////////////////////////////////////
 
 
-    result = undefined;
+    /* result = undefined;
     var page = 0;
     var term = "survey";
     
@@ -71,18 +71,18 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on page %d: %s", term, page, JSON.stringify(result));
+    console.log("Correlated to '%s' on page %d: %s", term, page, JSON.stringify(result)); */
 
 
     ////////////////////////////////////////////////
 
-    /* result = undefined;
-    var term = "result";
-    var docID = "HiddenReality.pdf";
+    result = undefined;
+    var term = "survey";
+    var docID = "MMAN0001_2012_TAB.pdf";
     
     var start = new Date();
 
-    result = wait.forMethod(xtr.actor, "correlatedWithinDocument", docID, term);
+    result = wait.forMethod(pdfix.search, "correlatedWithinDocument", docID, term);
     
     var end = new Date();
 
@@ -91,7 +91,8 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length); */
+    console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length);
+    console.log("%s", result);
 }
 
 wait.launchFiber(main);
