@@ -21,20 +21,18 @@ function main()
 
     var loadingResult = wait.forMethod(pdfix.loader, "load", examplePath, docID);
 
-    console.log("Pages processed: %s", loadingResult.length);
-    console.log("Results: %s", loadingResult);
-    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
+    console.log("Pages processed: %s", loadingResult);
 
 
     ////////////////////////////////////////////////
 
 
-    /* result = undefined;
+    result = undefined;
     var term = "result";
 
     var start = new Date();
 
-    result = wait.forMethod(xtr.actor, "search", term);
+    result = wait.forMethod(pdfix.search, "search", term);
 
     console.log("Document was searched");
 
@@ -52,7 +50,7 @@ function main()
         {
             console.log("Res: %s", JSON.stringify(result[a]));
         }
-    } */
+    }
 
 
     ////////////////////////////////////////////////
