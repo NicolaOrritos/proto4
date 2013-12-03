@@ -1,29 +1,29 @@
 
-var xtr  = require("./index.js");
+var pdfix  = require("./index.js");
 var wait = require("wait.for");
 
 
 function main()
 {
-    var result = wait.forMethod(xtr.actor, "init");
+    var result = wait.forMethod(pdfix.loader, "init");
 
-    // Result is the set of docs of this xtr.actor instance
+    // Result is the set of docs of this pdfix instance
     console.log("docs: %s", result);
 
 
     ////////////////////////////////////////////////
     
 
-    /* var examplePath = "examples/MMAN0001_2012_TAB.pdf";
+    var examplePath = "examples/MMAN0001_2012_TAB.pdf";
     var docID = "MMAN0001_2012_TAB.pdf";
     // var examplePath = "examples/HiddenReality.pdf";
     // var docID = "HiddenReality.pdf";
 
-    var loadingResult = wait.forMethod(xtr.actor, "load", examplePath, docID);
+    var loadingResult = wait.forMethod(pdfix.loader, "load", examplePath, docID);
 
     console.log("Pages processed: %s", loadingResult.length);
     console.log("Results: %s", loadingResult);
-    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO"); */
+    console.log("Errors? %s", (loadingResult.indexOf(0) != -1) ? "YES" : "NO");
 
 
     ////////////////////////////////////////////////
@@ -78,7 +78,7 @@ function main()
 
     ////////////////////////////////////////////////
 
-    result = undefined;
+    /* result = undefined;
     var term = "result";
     var docID = "HiddenReality.pdf";
     
@@ -93,7 +93,7 @@ function main()
     console.log("\nmilliseconds: #%d", time);
     console.log("seconds:      #%d", (time / 1000));
 
-    console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length);
+    console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length); */
 }
 
 wait.launchFiber(main);

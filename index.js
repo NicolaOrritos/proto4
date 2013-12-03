@@ -1,3 +1,3 @@
 
-module.exports = require("./lib/xtr.js");
+module.exports = require("./lib/pdfix.js");
 
