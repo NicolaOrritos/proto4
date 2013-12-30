@@ -14,14 +14,14 @@ function main()
     ////////////////////////////////////////////////
     
 
-    /* var examplePath = "examples/MMAN0001_2012_TAB.pdf";
-    var docID = "MMAN0001_2012_TAB.pdf";
-    // var examplePath = "examples/HiddenReality.pdf";
-    // var docID = "HiddenReality.pdf";
+    // var examplePath = "examples/MMAN0001_2012_TAB.pdf";
+    // var docID = "MMAN0001_2012_TAB.pdf";
+    var examplePath = "examples/HiddenReality.pdf";
+    var docID = "HiddenReality.pdf";
 
     var loadingResult = wait.forMethod(pdfix.loader, "load", examplePath, docID);
 
-    console.log("Pages processed: %s", loadingResult); */
+    console.log("Pages processed: %s", loadingResult);
 
 
     ////////////////////////////////////////////////
@@ -76,7 +76,7 @@ function main()
 
     ////////////////////////////////////////////////
 
-    result = undefined;
+    /* result = undefined;
     var term = "survey";
     var docID = "MMAN0001_2012_TAB.pdf";
     
@@ -92,7 +92,7 @@ function main()
     console.log("seconds:      #%d", (time / 1000));
 
     console.log("Correlated to '%s' on document '%s': %s", term, docID, result.length);
-    console.log("%s", result);
+    console.log("%s", result); */
 }
 
 wait.launchFiber(main);
